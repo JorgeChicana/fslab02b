@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WebSocket Test</title>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+  <h2>Chat Tiempo Real  (Org. Jorge Chicana)</h2>
+  <input id="mensaje" placeholder="Escribe algo">
+  <button onclick="enviar()">Enviar</button>
+  <ul id="chat"></ul>
+
+  <script>
+    const socket = io("http://localhost:3000");
+
+    socket.on("mensaje", (data) => {
+      const li = document.createElement("li");
+      li.textContent = data;
+      document.getElementById("chat").appendChild(li);
+    });
+
+    function enviar() {
+      const texto = document.getElementById("mensaje").value;
+      socket.emit("mensaje-cliente", texto);
+    }
+  </script>
+</body>
+</html>
